@@ -51,11 +51,14 @@ const currentPath = `~/experience/${entry.data.terminalFilename}`;
   .page-layout {
     display: flex;
     gap: 1.5rem;
-    align-items: flex-start;
+    align-items: stretch;
+    flex-direction: row-reverse;
   }
 
   .cover-aside {
+    /* No intrinsic height — the abs-positioned cover doesn't push row height */
     flex: 0 0 33%;
+    position: relative;
   }
 
   .page-content {
@@ -64,6 +67,10 @@ const currentPath = `~/experience/${entry.data.terminalFilename}`;
   }
 
   .entry-cover {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
     border: 1px solid var(--primary-dim);
     border-radius: 6px;
     overflow: hidden;
@@ -95,7 +102,9 @@ const currentPath = `~/experience/${entry.data.terminalFilename}`;
   }
 
   .cover-img-wrap {
+    flex: 1;
     position: relative;
+    overflow: hidden;
     line-height: 0;
   }
 
@@ -116,7 +125,9 @@ const currentPath = `~/experience/${entry.data.terminalFilename}`;
   .cover-img-wrap img {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
     filter: saturate(0.88) contrast(1.04) brightness(0.95);
   }
 
