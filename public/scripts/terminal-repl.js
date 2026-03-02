@@ -240,13 +240,11 @@
     });
   }
 
-  // ── Scroll to bottom ─────────────────────────────────────────
   function scrollToBottom() {
-    // rAF ensures the browser has completed layout for the newly injected
-    // content before we measure scrollHeight. scrollIntoView on a sticky
-    // element is unreliable — scrolling the window directly is more robust.
     requestAnimationFrame(() => {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      const element = document.querySelectorAll('#terminal-content > div')
+      const last = element[element.length - 1]
+      last.scrollIntoView()
     });
   }
 

@@ -60,7 +60,7 @@ function formatRange(start: Date, end?: Date) {
         <div class="cv-entry">
           <div class="cv-entry__header">
             <span class="cv-entry__title">{e.data.role}</span>
-            <span class="cv-entry__org"> @ {e.data.company}</span>
+            &nbsp;@&nbsp;<span class="cv-entry__org">{e.data.company}</span>
             {e.data.location && <span class="cv-entry__loc"> · {e.data.location}</span>}
           </div>
           <div class="cv-entry__meta">
@@ -214,7 +214,7 @@ function formatRange(start: Date, end?: Date) {
   }
 
   .cv-entry__org {
-    color: var(--muted-light);
+    color: var(--amber);
     font-size: 0.9rem;
   }
 
