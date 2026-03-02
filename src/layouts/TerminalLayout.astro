@@ -38,7 +38,7 @@ const { title, description, currentPath } = Astro.props;
       <StatusBar currentPath={currentPath} />
 
       <!-- REPL engine — loaded from public/scripts/ so it runs unprocessed -->
-      <script is:inline src="/scripts/terminal-repl.js"></script>
+      <script defer is:inline src="/scripts/terminal-repl.js"></script>
     </main>
   </body>
 </html>

@@ -74,9 +74,8 @@
 
 .terminal-header__title {
   color: var(--primary);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  text-shadow: var(--glow-sm);
   flex: 1;
 }
 
@@ -90,7 +89,7 @@
 
 .terminal-header__nav a {
   color: var(--muted-light);
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   text-decoration: none;
   transition: color 0.15s;
 }
@@ -98,7 +97,6 @@
 .terminal-header__nav a:hover,
 .terminal-header__nav a[aria-current="page"] {
   color: var(--amber);
-  text-shadow: var(--glow-amber);
 }
 
 .terminal-header__nav a .nav-key {
@@ -119,7 +117,7 @@
   align-items: center;
   padding: 0 1rem;
   gap: 1rem;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 }
 
 .status-bar__mode {
@@ -145,7 +143,6 @@
 
 .status-bar__ready {
   color: var(--green);
-  text-shadow: var(--glow-green);
 }
 
 /* ── Prompt ───────────────────────────────────────────────────── */
@@ -154,14 +151,14 @@
   align-items: center;
   gap: 0.25rem;
   padding: 0.25rem 1.5rem;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--white);
 }
 
-.prompt__user   { color: var(--green); text-shadow: var(--glow-green); }
+.prompt__user   { color: var(--green); }
 .prompt__sep    { color: var(--muted-light); }
-.prompt__host   { color: var(--primary); text-shadow: var(--glow-sm); }
-.prompt__path   { color: var(--amber); text-shadow: var(--glow-amber); }
+.prompt__host   { color: var(--primary); }
+.prompt__path   { color: var(--amber); }
 .prompt__dollar { color: var(--white); }
 .prompt__cmd    { color: var(--white); margin-left: 0.5rem; }
 
@@ -213,7 +210,6 @@
 
 .ls-entry__name--dir {
   color: var(--primary);
-  text-shadow: var(--glow-sm);
 }
 
 .ls-entry__name--dir::after {
@@ -227,7 +223,7 @@
 
 .ls-entry__desc {
   color: var(--muted-light);
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   grid-column: 4;
   padding-left: 2rem;
   align-self: center;
@@ -252,7 +248,7 @@
 
 .cat-output__vim-bar {
   color: var(--muted-light);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   margin-bottom: 0.5rem;
 }
 
@@ -271,7 +267,7 @@
 
 .cat-output__vim-footer {
   color: var(--muted-light);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   margin-top: 0.75rem;
   display: flex;
   justify-content: space-between;

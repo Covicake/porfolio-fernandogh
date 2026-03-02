@@ -3,9 +3,9 @@
 :root {
   --bg:            #0c0514;
   --bg-surface:    #12082a;
-  --primary:       #7f13ec;
-  --primary-dim:   #5a0fa8;
-  --primary-glow:  rgba(127, 19, 236, 0.6);
+  --primary:       #a855f7;
+  --primary-dim:   #6b21a8;
+  --primary-glow:  rgba(168, 85, 247, 0.6);
   --amber:         #ffb000;
   --green:         #39ff14;
   --green-dim:     #26b00d;
@@ -35,7 +35,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -55,7 +55,6 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--primary);
   margin: 0 0 0.5rem 0;
   line-height: 1.2;
-  text-shadow: var(--glow-sm);
 }
 
 p {
