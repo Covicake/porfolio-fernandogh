@@ -105,7 +105,7 @@
         if (!arg) {
           appendOutput(raw, errMsg('cat: missing filename'));
         } else {
-          navigateTo(raw, resolveUrl('cat', arg));
+          navigateTo(raw, resolveUrl('cat', arg), false);
         }
         break;
       case 'cd':
@@ -187,7 +187,7 @@
   }
 
   // ── Fetch-and-inject navigation ───────────────────────────────
-  async function navigateTo(cmd, url) {
+  async function navigateTo(cmd, url, updatePath = true) {
     if (!url) {
       appendOutput(cmd, errMsg('Cannot resolve path'));
       return;
@@ -212,11 +212,13 @@
       if (fresh) {
         injectPageStyles(doc);
         contentEl.innerHTML = fresh.innerHTML;
-        const newPath = fresh.dataset.path || pathFromUrl(url);
-        currentPath = newPath;
-        pathEl.textContent = newPath;
-        updateStatusPath(newPath);
-        history.pushState({ path: newPath, url }, '', url);
+        if (updatePath) {
+          const newPath = fresh.dataset.path || pathFromUrl(url);
+          currentPath = newPath;
+          pathEl.textContent = newPath;
+          updateStatusPath(newPath);
+        }
+        history.pushState({ path: currentPath, url }, '', url);
         scrollToBottom();
       } else {
         // Fallback: navigate normally
