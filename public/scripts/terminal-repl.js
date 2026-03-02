@@ -206,6 +206,7 @@
         pathEl.textContent = newPath;
         updateStatusPath(newPath);
         history.pushState({ path: newPath, url }, '', url);
+        scrollToBottom();
       } else {
         // Fallback: navigate normally
         window.location.href = url;
@@ -222,13 +223,18 @@
     return '~' + u;
   }
 
+  // ── Scroll to bottom ─────────────────────────────────────────
+  function scrollToBottom() {
+    inputEl.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+
   // ── Inline output (no navigation) ────────────────────────────
   function appendOutput(cmd, html) {
     const entry = document.createElement('div');
     entry.className = 'history-entry';
     entry.innerHTML = promptHtml(currentPath, cmd) + html;
     historyEl.appendChild(entry);
-    entry.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    scrollToBottom();
   }
 
   // ── Prompt HTML builder ───────────────────────────────────────
