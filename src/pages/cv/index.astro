@@ -1,0 +1,279 @@
+---
+import CatLayout from '../../layouts/CatLayout.astro';
+import { getCollection } from 'astro:content';
+
+const experience = (await getCollection('experience')).sort(
+  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
+);
+
+const education = (await getCollection('education')).sort(
+  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
+);
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
+);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+
+function formatRange(start: Date, end?: Date) {
+  return end ? `${formatDate(start)} – ${formatDate(end)}` : `${formatDate(start)} – present`;
+}
+---
+
+<CatLayout
+  title="cv.md — fer@portfolio"
+  description="Fernando García Hernández — full CV summary"
+  currentPath="~"
+  filename="cv.md"
+  backPath="~"
+  backLabel="~"
+>
+  <section class="cv-section">
+    <h1 class="cv-name">Fernando García Hernández</h1>
+    <p class="cv-tagline">Tech Lead · Software Engineer · Backend & Architecture</p>
+    <p class="cv-contact">
+      <a href="mailto:hello@fer.dev">hello@fer.dev</a>
+      <span class="cv-sep">·</span>
+      <a href="https://github.com/ferghh" target="_blank" rel="noopener">github.com/ferghh</a>
+      <span class="cv-sep">·</span>
+      <a href="https://fernandogh.com" target="_blank" rel="noopener">fernandogh.com</a>
+    </p>
+  </section>
+
+  <section class="cv-section">
+    <h2 class="cv-heading">Summary</h2>
+    <p>
+      8+ years of professional experience building backend-heavy, scalable systems in enterprise
+      environments. Specialised in Java and Node.js backends, clean architecture, DDD, and
+      distributed systems. Comfortable across the full stack. Currently Tech Lead at
+      <strong>Docline</strong>.
+    </p>
+  </section>
+
+  <section class="cv-section">
+    <h2 class="cv-heading">Experience</h2>
+    <div class="cv-entries">
+      {experience.map(e => (
+        <div class="cv-entry">
+          <div class="cv-entry__header">
+            <span class="cv-entry__title">{e.data.role}</span>
+            <span class="cv-entry__org"> @ {e.data.company}</span>
+            {e.data.location && <span class="cv-entry__loc"> · {e.data.location}</span>}
+          </div>
+          <div class="cv-entry__meta">
+            <span class="cv-entry__date">{formatRange(e.data.startDate, e.data.endDate)}</span>
+            {e.data.tech.length > 0 && (
+              <span class="cv-entry__tech">{e.data.tech.join(' · ')}</span>
+            )}
+          </div>
+          <p class="cv-entry__desc">{e.data.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="cv-section">
+    <h2 class="cv-heading">Education</h2>
+    <div class="cv-entries">
+      {education.map(e => (
+        <div class="cv-entry">
+          <div class="cv-entry__header">
+            <span class="cv-entry__title">{e.data.degree} in {e.data.field}</span>
+            <span class="cv-entry__org"> — {e.data.institution}</span>
+          </div>
+          <div class="cv-entry__meta">
+            <span class="cv-entry__date">{formatRange(e.data.startDate, e.data.endDate)}</span>
+          </div>
+          {e.data.description && <p class="cv-entry__desc">{e.data.description}</p>}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="cv-section">
+    <h2 class="cv-heading">Projects</h2>
+    <div class="cv-entries">
+      {projects.map(p => (
+        <div class="cv-entry">
+          <div class="cv-entry__header">
+            <span class="cv-entry__title">{p.data.title}</span>
+            {p.data.liveUrl && (
+              <a class="cv-entry__link" href={p.data.liveUrl} target="_blank" rel="noopener">
+                ↗ {p.data.liveUrl.replace(/^https?:\/\//, '')}
+              </a>
+            )}
+          </div>
+          <div class="cv-entry__meta">
+            <span class="cv-entry__tech">{p.data.tech.join(' · ')}</span>
+          </div>
+          <p class="cv-entry__desc">{p.data.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="cv-section">
+    <h2 class="cv-heading">Tech Stack</h2>
+    <div class="cv-stack">
+      <div class="cv-stack__row">
+        <span class="cv-stack__label">Languages</span>
+        <span>TypeScript · JavaScript · Java · SQL</span>
+      </div>
+      <div class="cv-stack__row">
+        <span class="cv-stack__label">Backend</span>
+        <span>Node.js · NestJS · Express · Spring Boot · REST · Microservices · DDD · Hexagonal</span>
+      </div>
+      <div class="cv-stack__row">
+        <span class="cv-stack__label">Frontend</span>
+        <span>React · React Native · HTML · CSS · Astro</span>
+      </div>
+      <div class="cv-stack__row">
+        <span class="cv-stack__label">Data</span>
+        <span>PostgreSQL · MongoDB · Kafka · SQL Server · MySQL · PostGIS</span>
+      </div>
+      <div class="cv-stack__row">
+        <span class="cv-stack__label">Cloud & Infra</span>
+        <span>AWS · Docker · Kubernetes · ArgoCD · GitHub Actions · Cloudflare</span>
+      </div>
+      <div class="cv-stack__row">
+        <span class="cv-stack__label">Practices</span>
+        <span>TDD · Clean Architecture · SOLID · Scrum · Kanban</span>
+      </div>
+    </div>
+  </section>
+</CatLayout>
+
+<style>
+  .cv-name {
+    font-size: 1.4rem;
+    color: var(--primary);
+    margin: 0 0 0.25rem;
+  }
+
+  .cv-tagline {
+    color: var(--muted-light);
+    font-size: 0.9rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .cv-contact {
+    font-size: 0.85rem;
+    color: var(--muted-light);
+    margin: 0;
+  }
+
+  .cv-contact a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  .cv-contact a:hover {
+    text-decoration: underline;
+  }
+
+  .cv-sep {
+    margin: 0 0.4rem;
+    color: var(--muted);
+  }
+
+  .cv-section {
+    margin-bottom: 1.75rem;
+  }
+
+  .cv-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    border-bottom: 1px solid var(--primary-dim);
+    padding-bottom: 0.25rem;
+    margin: 0 0 1rem;
+  }
+
+  .cv-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .cv-entry__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.2rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .cv-entry__title {
+    color: var(--white);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .cv-entry__org {
+    color: var(--muted-light);
+    font-size: 0.9rem;
+  }
+
+  .cv-entry__loc {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  .cv-entry__link {
+    margin-left: auto;
+    color: var(--primary);
+    font-size: 0.8rem;
+    text-decoration: none;
+  }
+
+  .cv-entry__link:hover {
+    text-decoration: underline;
+  }
+
+  .cv-entry__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .cv-entry__date {
+    color: var(--green);
+    font-size: 0.8rem;
+  }
+
+  .cv-entry__tech {
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  .cv-entry__desc {
+    color: var(--muted-light);
+    font-size: 0.88rem;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  .cv-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .cv-stack__row {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .cv-stack__label {
+    flex: 0 0 6rem;
+    color: var(--primary);
+    font-weight: 700;
+  }
+</style>

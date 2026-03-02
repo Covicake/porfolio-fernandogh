@@ -7,7 +7,7 @@ export async function GET() {
   const experience = await getCollection('experience');
   const education = await getCollection('education');
   const map: Record<string, string[]> = {
-    '/': ['projects/', 'experience/', 'education/', 'bio.md', 'tech_stack.md', 'contact.md'],
+    '/': ['projects/', 'experience/', 'education/', 'cv.md', 'bio.md', 'tech_stack.md', 'contact.md'],
     '/projects/': projects.map(p => p.data.terminalFilename),
     '/experience/': experience.map(e => e.data.terminalFilename),
     '/education/': education.map(e => e.data.terminalFilename),
