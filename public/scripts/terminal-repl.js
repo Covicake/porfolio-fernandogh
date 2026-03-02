@@ -127,9 +127,10 @@
 
     // Direct path mappings
     const fileMap = {
-      'bio.md':       '/bio/',
+      'cv.md':         '/cv/',
+      'bio.md':        '/bio/',
       'tech_stack.md': '/tech-stack/',
-      'contact.md':   '/contact/',
+      'contact.md':    '/contact/',
     };
 
     if (cmd === 'cat') {
@@ -200,6 +201,7 @@
       const fresh = doc.getElementById('terminal-content');
 
       if (fresh) {
+        injectPageStyles(doc);
         contentEl.innerHTML = fresh.innerHTML;
         const newPath = fresh.dataset.path || pathFromUrl(url);
         currentPath = newPath;
@@ -221,6 +223,21 @@
     const u = url.replace(/\/$/, '');
     if (!u || u === '') return '~';
     return '~' + u;
+  }
+
+  // ── Style injection ───────────────────────────────────────────
+  // Astro scopes page styles into <style> tags in <head>. When we inject
+  // only #terminal-content, those styles are missing. Copy any <style>
+  // blocks from the fetched page that aren't already in our <head>.
+  function injectPageStyles(doc) {
+    const existing = new Set(
+      Array.from(document.head.querySelectorAll('style')).map(s => s.textContent)
+    );
+    doc.head.querySelectorAll('style').forEach(style => {
+      if (!existing.has(style.textContent)) {
+        document.head.appendChild(style.cloneNode(true));
+      }
+    });
   }
 
   // ── Scroll to bottom ─────────────────────────────────────────
@@ -397,6 +414,7 @@
       const fresh = doc.getElementById('terminal-content');
 
       if (fresh) {
+        injectPageStyles(doc);
         contentEl.innerHTML = fresh.innerHTML;
         currentPath = (state && state.path) || fresh.dataset.path || pathFromUrl(url);
         pathEl.textContent = currentPath;
