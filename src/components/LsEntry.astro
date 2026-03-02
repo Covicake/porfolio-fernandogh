@@ -1,0 +1,23 @@
+---
+interface Props {
+  type: 'dir' | 'file';
+  name: string;
+  href: string;
+  description?: string;
+  fileSize?: string;
+  date?: string;
+}
+
+const { type, name, href, description, fileSize = '—', date = '—' } = Astro.props;
+
+const perms = type === 'dir' ? 'drwxr-xr-x' : '-rw-r--r--';
+const nameClass = type === 'dir' ? 'ls-entry__name--dir' : 'ls-entry__name--file';
+---
+
+<a href={href} class="ls-entry" data-terminal-link>
+  <span class="ls-entry__perms">{perms}</span>
+  <span class="ls-entry__size">{fileSize}</span>
+  <span class="ls-entry__date">{date}</span>
+  <span class={`ls-entry__name ${nameClass}`}>{name}</span>
+  {description && <span class="ls-entry__desc">{description}</span>}
+</a>

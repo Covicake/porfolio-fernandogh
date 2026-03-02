@@ -1,0 +1,29 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import CatLayout from '../../layouts/CatLayout.astro';
+
+export async function getStaticPaths() {
+  const education = await getCollection('education');
+  return education.map(e => ({
+    params: { slug: e.id },
+    props: e,
+  }));
+}
+
+type Props = CollectionEntry<'education'>;
+
+const entry = Astro.props;
+const { Content } = await render(entry);
+const currentPath = `~/education/${entry.data.terminalFilename}`;
+---
+
+<CatLayout
+  title={`${entry.data.degree} in ${entry.data.field} — fer@portfolio`}
+  description={entry.data.description ?? `${entry.data.degree} at ${entry.data.institution}`}
+  currentPath={currentPath}
+  filename={entry.data.terminalFilename}
+  backPath="/education/"
+  backLabel="education/"
+>
+  <Content />
+</CatLayout>

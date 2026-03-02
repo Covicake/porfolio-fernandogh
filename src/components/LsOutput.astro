@@ -1,0 +1,36 @@
+---
+import TerminalPrompt from './TerminalPrompt.astro';
+import LsEntry from './LsEntry.astro';
+
+export interface LsEntryData {
+  type: 'dir' | 'file';
+  name: string;
+  href: string;
+  description?: string;
+  fileSize?: string;
+  date?: string;
+}
+
+interface Props {
+  entries: LsEntryData[];
+  path: string;
+  command?: string;
+}
+
+const { entries, path, command = 'ls' } = Astro.props;
+---
+
+<TerminalPrompt path={path} command={command} />
+<div class="ls-output">
+  <div class="ls-output__header">total {entries.length}</div>
+  {entries.map(entry => (
+    <LsEntry
+      type={entry.type}
+      name={entry.name}
+      href={entry.href}
+      description={entry.description}
+      fileSize={entry.fileSize}
+      date={entry.date}
+    />
+  ))}
+</div>

@@ -1,0 +1,22 @@
+---
+interface Props {
+  filename: string;
+  lineCount?: number;
+}
+
+const { filename, lineCount = 1 } = Astro.props;
+---
+
+<div class="cat-output">
+  <div class="cat-output__vim-bar">
+    <span class="filename">"{filename}"</span>
+    &nbsp;{lineCount}L
+  </div>
+  <div class="cat-output__body prose">
+    <slot />
+  </div>
+  <div class="cat-output__vim-footer">
+    <span>-- INSERT --</span>
+    <span>{lineCount} lines, All</span>
+  </div>
+</div>

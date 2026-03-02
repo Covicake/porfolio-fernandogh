@@ -1,0 +1,345 @@
+/* Terminal UI — shared classes for CRT, prompt, ls, cat, input */
+
+/* ── CRT overlay ─────────────────────────────────────────────── */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+}
+
+.crt-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+/* ── Layout ──────────────────────────────────────────────────── */
+#terminal-window {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 2.5rem;   /* TerminalHeader height */
+  padding-bottom: 2rem;  /* StatusBar height */
+}
+
+#terminal-history {
+  flex: 0 0 auto;
+}
+
+#terminal-content {
+  flex: 1 0 auto;
+  padding: 1rem 1.5rem;
+}
+
+#terminal-input-line {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1.5rem;
+  position: sticky;
+  bottom: 2rem;
+  background: var(--bg);
+  border-top: 1px solid var(--primary-dim);
+}
+
+/* ── Terminal Header ──────────────────────────────────────────── */
+.terminal-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--primary);
+  box-shadow: var(--glow-sm);
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 1.5rem;
+}
+
+.terminal-header__title {
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-shadow: var(--glow-sm);
+  flex: 1;
+}
+
+.terminal-header__nav {
+  display: flex;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.terminal-header__nav a {
+  color: var(--muted-light);
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.terminal-header__nav a:hover,
+.terminal-header__nav a[aria-current="page"] {
+  color: var(--amber);
+  text-shadow: var(--glow-amber);
+}
+
+.terminal-header__nav a .nav-key {
+  color: var(--amber);
+  margin-right: 0.15em;
+}
+
+/* ── Status Bar ───────────────────────────────────────────────── */
+.status-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--primary-dim);
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 1rem;
+  font-size: 0.7rem;
+}
+
+.status-bar__mode {
+  background: var(--amber);
+  color: var(--bg);
+  padding: 0 0.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.status-bar__path {
+  color: var(--white);
+  flex: 1;
+}
+
+.status-bar__clock {
+  color: var(--white);
+  opacity: 0.8;
+}
+
+.status-bar__ready {
+  color: var(--green);
+  text-shadow: var(--glow-green);
+}
+
+/* ── Prompt ───────────────────────────────────────────────────── */
+.prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 1.5rem;
+  font-size: 0.85rem;
+  color: var(--white);
+}
+
+.prompt__user   { color: var(--green); text-shadow: var(--glow-green); }
+.prompt__sep    { color: var(--muted-light); }
+.prompt__host   { color: var(--primary); text-shadow: var(--glow-sm); }
+.prompt__path   { color: var(--amber); text-shadow: var(--glow-amber); }
+.prompt__dollar { color: var(--white); }
+.prompt__cmd    { color: var(--white); margin-left: 0.5rem; }
+
+/* ── LS output ────────────────────────────────────────────────── */
+.ls-output {
+  padding: 0.5rem 1.5rem 1rem;
+}
+
+.ls-output__header {
+  color: var(--muted-light);
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--muted);
+}
+
+.ls-entry {
+  display: grid;
+  grid-template-columns: 7rem 5rem 7rem 1fr;
+  gap: 0;
+  padding: 0.15rem 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  border-radius: 2px;
+  transition: background 0.1s;
+}
+
+.ls-entry:hover {
+  background: rgba(127, 19, 236, 0.08);
+}
+
+.ls-entry__perms {
+  color: var(--muted-light);
+}
+
+.ls-entry__size {
+  color: var(--amber);
+  text-align: right;
+  padding-right: 1.5rem;
+}
+
+.ls-entry__date {
+  color: var(--muted-light);
+}
+
+.ls-entry__name {
+  font-weight: 700;
+}
+
+.ls-entry__name--dir {
+  color: var(--primary);
+  text-shadow: var(--glow-sm);
+}
+
+.ls-entry__name--dir::after {
+  content: '/';
+  opacity: 0.6;
+}
+
+.ls-entry__name--file {
+  color: var(--white);
+}
+
+.ls-entry__desc {
+  color: var(--muted-light);
+  font-size: 0.8rem;
+  grid-column: 4;
+  padding-left: 2rem;
+  align-self: center;
+}
+
+/* Wide-screen: description inline */
+@media (min-width: 800px) {
+  .ls-entry {
+    grid-template-columns: 7rem 5rem 7rem 16rem 1fr;
+  }
+
+  .ls-entry__desc {
+    grid-column: 5;
+    padding-left: 0;
+  }
+}
+
+/* ── Cat output ───────────────────────────────────────────────── */
+.cat-output {
+  padding: 0.5rem 1.5rem;
+}
+
+.cat-output__vim-bar {
+  color: var(--muted-light);
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.cat-output__vim-bar .filename {
+  color: var(--amber);
+}
+
+.cat-output__body {
+  border-left: 2px solid var(--primary-dim);
+  padding-left: 1rem;
+}
+
+.cat-output__body h1 { font-size: 1.4rem; }
+.cat-output__body h2 { font-size: 1.15rem; margin-top: 1.5rem; }
+.cat-output__body h3 { font-size: 1rem; margin-top: 1rem; }
+
+.cat-output__vim-footer {
+  color: var(--muted-light);
+  font-size: 0.75rem;
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ── Command input ────────────────────────────────────────────── */
+#terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--white);
+  caret-color: var(--green);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 0;
+}
+
+/* ── History entries ──────────────────────────────────────────── */
+.history-entry {
+  border-bottom: 1px solid rgba(85,85,85,0.2);
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+/* ── ASCII art ────────────────────────────────────────────────── */
+.ascii-art {
+  color: var(--primary);
+  text-shadow: var(--glow-sm);
+  font-size: 0.8rem;
+  line-height: 1.2;
+  padding: 0.5rem 1.5rem;
+  white-space: pre;
+  font-family: var(--font-mono);
+}
+
+.ascii-art__tagline {
+  color: var(--muted-light);
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+/* ── Mobile ───────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .ascii-art {
+    font-size: 0.5rem;
+  }
+
+  .ls-entry {
+    grid-template-columns: 1fr;
+  }
+
+  .ls-entry__perms,
+  .ls-entry__size,
+  .ls-entry__date {
+    display: none;
+  }
+
+  .ls-entry__name {
+    grid-column: 1;
+  }
+
+  .ls-entry__desc {
+    grid-column: 1;
+    padding-left: 1rem;
+  }
+
+  .terminal-header__nav {
+    display: none;
+  }
+}

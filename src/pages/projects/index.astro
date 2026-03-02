@@ -1,0 +1,29 @@
+---
+import TerminalLayout from '../../layouts/TerminalLayout.astro';
+import LsOutput from '../../components/LsOutput.astro';
+import { getCollection } from 'astro:content';
+import type { LsEntryData } from '../../components/LsOutput.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
+);
+
+const currentPath = '~/projects';
+
+const entries: LsEntryData[] = projects.map(p => ({
+  type: 'file' as const,
+  name: p.data.terminalFilename,
+  href: `/projects/${p.id}/`,
+  description: p.data.description,
+  fileSize: p.data.fileSize ?? '—',
+  date: p.data.startDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+}));
+---
+
+<TerminalLayout
+  title={`projects/ — fer@portfolio`}
+  description="Side projects and open source work"
+  currentPath={currentPath}
+>
+  <LsOutput entries={entries} path={currentPath} />
+</TerminalLayout>

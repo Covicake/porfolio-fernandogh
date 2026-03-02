@@ -1,0 +1,29 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import CatLayout from '../../layouts/CatLayout.astro';
+
+export async function getStaticPaths() {
+  const experience = await getCollection('experience');
+  return experience.map(e => ({
+    params: { slug: e.id },
+    props: e,
+  }));
+}
+
+type Props = CollectionEntry<'experience'>;
+
+const entry = Astro.props;
+const { Content } = await render(entry);
+const currentPath = `~/experience/${entry.data.terminalFilename}`;
+---
+
+<CatLayout
+  title={`${entry.data.role} @ ${entry.data.company} — fer@portfolio`}
+  description={entry.data.description}
+  currentPath={currentPath}
+  filename={entry.data.terminalFilename}
+  backPath="/experience/"
+  backLabel="experience/"
+>
+  <Content />
+</CatLayout>

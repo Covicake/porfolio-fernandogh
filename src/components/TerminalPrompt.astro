@@ -1,0 +1,23 @@
+---
+import { OWNER_USER, OWNER_HOST } from '../consts';
+
+interface Props {
+  path: string;
+  command?: string;
+}
+
+const { path, command } = Astro.props;
+---
+
+<div class="prompt">
+  <span class="prompt__user">{OWNER_USER}</span>
+  <span class="prompt__sep">@</span>
+  <span class="prompt__host">{OWNER_HOST}</span>
+  <span class="prompt__sep">:</span>
+  <span class="prompt__path">{path}</span>
+  <span class="prompt__dollar">$</span>
+  {command
+    ? <span class="prompt__cmd">{command}</span>
+    : <span class="prompt__cursor" aria-hidden="true">█</span>
+  }
+</div>

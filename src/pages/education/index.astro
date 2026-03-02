@@ -1,0 +1,29 @@
+---
+import TerminalLayout from '../../layouts/TerminalLayout.astro';
+import LsOutput from '../../components/LsOutput.astro';
+import { getCollection } from 'astro:content';
+import type { LsEntryData } from '../../components/LsOutput.astro';
+
+const education = (await getCollection('education')).sort(
+  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
+);
+
+const currentPath = '~/education';
+
+const entries: LsEntryData[] = education.map(e => ({
+  type: 'file' as const,
+  name: e.data.terminalFilename,
+  href: `/education/${e.id}/`,
+  description: `${e.data.degree} in ${e.data.field} — ${e.data.institution}`,
+  fileSize: e.data.fileSize ?? '—',
+  date: e.data.startDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+}));
+---
+
+<TerminalLayout
+  title={`education/ — fer@portfolio`}
+  description="Degrees and courses"
+  currentPath={currentPath}
+>
+  <LsOutput entries={entries} path={currentPath} />
+</TerminalLayout>

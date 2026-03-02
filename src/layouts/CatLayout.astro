@@ -1,0 +1,51 @@
+---
+import TerminalLayout from './TerminalLayout.astro';
+import TerminalPrompt from '../components/TerminalPrompt.astro';
+import CatOutput from '../components/CatOutput.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  currentPath: string;
+  filename: string;
+  backPath?: string;
+  backLabel?: string;
+}
+
+const {
+  title,
+  description,
+  currentPath,
+  filename,
+  backPath,
+  backLabel,
+} = Astro.props;
+---
+
+<TerminalLayout title={title} description={description} currentPath={currentPath}>
+  <TerminalPrompt path={currentPath} command={`cat ${filename}`} />
+  {backPath && (
+    <div class="cat-back">
+      <a href={backPath} class="cat-back__link" data-terminal-link>
+        ← {backLabel ?? backPath}
+      </a>
+    </div>
+  )}
+  <CatOutput filename={filename}>
+    <slot />
+  </CatOutput>
+</TerminalLayout>
+
+<style>
+  .cat-back {
+    padding: 0.25rem 1.5rem;
+  }
+  .cat-back__link {
+    color: var(--muted-light);
+    font-size: 0.8rem;
+    text-decoration: none;
+  }
+  .cat-back__link:hover {
+    color: var(--primary);
+  }
+</style>

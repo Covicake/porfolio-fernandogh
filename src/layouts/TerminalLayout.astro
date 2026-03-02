@@ -1,0 +1,42 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import CrtOverlay from '../components/CrtOverlay.astro';
+import TerminalHeader from '../components/TerminalHeader.astro';
+import StatusBar from '../components/StatusBar.astro';
+import CommandInput from '../components/CommandInput.astro';
+import '../styles/terminal.css';
+
+interface Props {
+  title: string;
+  description: string;
+  currentPath: string;
+}
+
+const { title, description, currentPath } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body>
+    <CrtOverlay />
+    <TerminalHeader currentPath={currentPath} />
+
+    <div id="terminal-window">
+      <div id="terminal-history"></div>
+
+      <div id="terminal-content" data-path={currentPath}>
+        <slot />
+      </div>
+
+      <CommandInput currentPath={currentPath} />
+    </div>
+
+    <StatusBar currentPath={currentPath} />
+
+    <!-- REPL engine — loaded from public/scripts/ so it runs unprocessed -->
+    <script is:inline src="/scripts/terminal-repl.js"></script>
+  </body>
+</html>

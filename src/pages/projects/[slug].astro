@@ -1,0 +1,55 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import CatLayout from '../../layouts/CatLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(p => ({
+    params: { slug: p.id },
+    props: p,
+  }));
+}
+
+type Props = CollectionEntry<'projects'>;
+
+const project = Astro.props;
+const { Content } = await render(project);
+const currentPath = `~/projects/${project.data.terminalFilename}`;
+---
+
+<CatLayout
+  title={`${project.data.title} — fer@portfolio`}
+  description={project.data.description}
+  currentPath={currentPath}
+  filename={project.data.terminalFilename}
+  backPath="/projects/"
+  backLabel="projects/"
+>
+  <Content />
+  {(project.data.repoUrl || project.data.liveUrl) && (
+    <div class="project-links">
+      {project.data.repoUrl && (
+        <a href={project.data.repoUrl} target="_blank" rel="noopener noreferrer">
+          [repo]
+        </a>
+      )}
+      {project.data.liveUrl && (
+        <a href={project.data.liveUrl} target="_blank" rel="noopener noreferrer">
+          [live]
+        </a>
+      )}
+    </div>
+  )}
+</CatLayout>
+
+<style>
+  .project-links {
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
+  .project-links a {
+    color: var(--primary);
+  }
+</style>

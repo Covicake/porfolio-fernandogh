@@ -1,0 +1,22 @@
+---
+import { getCollection, render } from 'astro:content';
+import CatLayout from '../../layouts/CatLayout.astro';
+
+const cvEntries = await getCollection('cv');
+const techStack = cvEntries.find(e => e.id === 'tech-stack');
+
+if (!techStack) throw new Error('tech-stack.mdx not found in content/cv/');
+
+const { Content } = await render(techStack);
+---
+
+<CatLayout
+  title={`tech_stack.md — fer@portfolio`}
+  description={techStack.data.description}
+  currentPath="~/tech_stack.md"
+  filename="tech_stack.md"
+  backPath="/"
+  backLabel="~"
+>
+  <Content />
+</CatLayout>

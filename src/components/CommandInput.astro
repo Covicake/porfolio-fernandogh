@@ -1,0 +1,27 @@
+---
+import { OWNER_USER, OWNER_HOST } from '../consts';
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+---
+
+<div id="terminal-input-line">
+  <span class="prompt__user">{OWNER_USER}</span>
+  <span class="prompt__sep">@</span>
+  <span class="prompt__host">{OWNER_HOST}</span>
+  <span class="prompt__sep">:</span>
+  <span class="prompt__path" id="current-path">{currentPath}</span>
+  <span class="prompt__dollar">$</span>
+  <input
+    id="terminal-input"
+    type="text"
+    autocomplete="off"
+    spellcheck="false"
+    autocorrect="off"
+    autocapitalize="off"
+    aria-label="Terminal command input"
+  />
+</div>

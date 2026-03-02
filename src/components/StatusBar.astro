@@ -1,0 +1,26 @@
+---
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+---
+
+<div class="status-bar" role="status" aria-label="Status bar">
+  <span class="status-bar__mode">NORMAL</span>
+  <span class="status-bar__path">{currentPath}</span>
+  <span class="status-bar__clock" id="status-clock" aria-live="off"></span>
+  <span class="status-bar__ready">READY</span>
+</div>
+
+<script>
+  function updateClock() {
+    const el = document.getElementById('status-clock');
+    if (el) {
+      const now = new Date();
+      el.textContent = now.toLocaleTimeString('en-US', { hour12: false });
+    }
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>

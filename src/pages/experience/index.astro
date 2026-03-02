@@ -1,0 +1,29 @@
+---
+import TerminalLayout from '../../layouts/TerminalLayout.astro';
+import LsOutput from '../../components/LsOutput.astro';
+import { getCollection } from 'astro:content';
+import type { LsEntryData } from '../../components/LsOutput.astro';
+
+const experience = (await getCollection('experience')).sort(
+  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
+);
+
+const currentPath = '~/experience';
+
+const entries: LsEntryData[] = experience.map(e => ({
+  type: 'file' as const,
+  name: e.data.terminalFilename,
+  href: `/experience/${e.id}/`,
+  description: `${e.data.role} @ ${e.data.company}`,
+  fileSize: e.data.fileSize ?? '—',
+  date: e.data.startDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+}));
+---
+
+<TerminalLayout
+  title={`experience/ — fer@portfolio`}
+  description="Work history and professional experience"
+  currentPath={currentPath}
+>
+  <LsOutput entries={entries} path={currentPath} />
+</TerminalLayout>
