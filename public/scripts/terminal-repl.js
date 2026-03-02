@@ -225,13 +225,12 @@
 
   // ── Scroll to bottom ─────────────────────────────────────────
   function scrollToBottom() {
-    // Double rAF: first frame lets the browser process DOM changes,
-    // second fires after layout so the scroll target is fully measured.
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() =>
-        inputEl.scrollIntoView({ behavior: 'smooth', block: 'end' })
-      )
-    );
+    // rAF ensures the browser has completed layout for the newly injected
+    // content before we measure scrollHeight. scrollIntoView on a sticky
+    // element is unreliable — scrolling the window directly is more robust.
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
   }
 
   // ── Inline output (no navigation) ────────────────────────────

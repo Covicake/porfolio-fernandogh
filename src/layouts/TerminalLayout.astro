@@ -21,22 +21,24 @@ const { title, description, currentPath } = Astro.props;
     <BaseHead title={title} description={description} />
   </head>
   <body>
-    <CrtOverlay />
-    <TerminalHeader currentPath={currentPath} />
+    <main>
+      <CrtOverlay />
+      <TerminalHeader currentPath={currentPath} />
 
-    <div id="terminal-window">
-      <div id="terminal-history"></div>
+      <div id="terminal-window">
+        <div id="terminal-history"></div>
 
-      <div id="terminal-content" data-path={currentPath}>
-        <slot />
+        <div id="terminal-content" data-path={currentPath}>
+          <slot />
+        </div>
+
+        <CommandInput currentPath={currentPath} />
       </div>
 
-      <CommandInput currentPath={currentPath} />
-    </div>
+      <StatusBar currentPath={currentPath} />
 
-    <StatusBar currentPath={currentPath} />
-
-    <!-- REPL engine — loaded from public/scripts/ so it runs unprocessed -->
-    <script is:inline src="/scripts/terminal-repl.js"></script>
+      <!-- REPL engine — loaded from public/scripts/ so it runs unprocessed -->
+      <script is:inline src="/scripts/terminal-repl.js"></script>
+    </main>
   </body>
 </html>
