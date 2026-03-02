@@ -428,7 +428,7 @@
     // Also update terminal header title
     const headerTitle = document.querySelector('.terminal-header__title');
     if (headerTitle) {
-      headerTitle.textContent = `fer@portfolio:${path}`;
+      headerTitle.textContent = `fernando@portfolio:${path}`;
     }
   }
 
