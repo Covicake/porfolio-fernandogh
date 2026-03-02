@@ -25,41 +25,57 @@ const currentPath = `~/projects/${project.data.terminalFilename}`;
   backPath="/projects/"
   backLabel="projects/"
 >
-  {project.data.coverImage && (
-    <div class="project-cover">
-      <div class="project-cover__chrome">
-        <span class="dot dot--red"></span>
-        <span class="dot dot--yellow"></span>
-        <span class="dot dot--green"></span>
-        {project.data.liveUrl && (
-          <span class="project-cover__url">{project.data.liveUrl.replace(/^https?:\/\//, '')}</span>
-        )}
-      </div>
-      <div class="project-cover__img-wrap">
-        <img src={project.data.coverImage} alt={`${project.data.title} screenshot`} loading="lazy" />
-      </div>
-    </div>
-  )}
-  <Content />
-  {(project.data.repoUrl || project.data.liveUrl) && (
-    <div class="project-links">
-      {project.data.repoUrl && (
-        <a href={project.data.repoUrl} target="_blank" rel="noopener noreferrer">
-          [repo]
-        </a>
+  <div class="page-layout">
+    {project.data.coverImage && (
+      <aside class="cover-aside">
+        <div class="project-cover">
+          <div class="project-cover__chrome">
+            <span class="dot dot--red"></span>
+            <span class="dot dot--yellow"></span>
+            <span class="dot dot--green"></span>
+            {project.data.liveUrl && (
+              <span class="cover-url">{project.data.liveUrl.replace(/^https?:\/\//, '')}</span>
+            )}
+          </div>
+          <div class="cover-img-wrap">
+            <img src={project.data.coverImage} alt={`${project.data.title} screenshot`} loading="lazy" />
+          </div>
+        </div>
+      </aside>
+    )}
+    <div class="page-content">
+      <Content />
+      {(project.data.repoUrl || project.data.liveUrl) && (
+        <div class="project-links">
+          {project.data.repoUrl && (
+            <a href={project.data.repoUrl} target="_blank" rel="noopener noreferrer">[repo]</a>
+          )}
+          {project.data.liveUrl && (
+            <a href={project.data.liveUrl} target="_blank" rel="noopener noreferrer">[live]</a>
+          )}
+        </div>
       )}
-      {project.data.liveUrl && (
-        <a href={project.data.liveUrl} target="_blank" rel="noopener noreferrer">
-          [live]
-        </a>
-      )}
     </div>
-  )}
+  </div>
 </CatLayout>
 
 <style>
+  .page-layout {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .cover-aside {
+    flex: 0 0 33%;
+  }
+
+  .page-content {
+    flex: 1;
+    min-width: 0;
+  }
+
   .project-cover {
-    margin: 0.5rem 1.5rem 1.25rem;
     border: 1px solid var(--primary-dim);
     border-radius: 6px;
     overflow: hidden;
@@ -84,7 +100,7 @@ const currentPath = `~/projects/${project.data.terminalFilename}`;
   .dot--yellow { background: #ffbd2e; }
   .dot--green  { background: #28c840; }
 
-  .project-cover__url {
+  .cover-url {
     margin-left: 0.5rem;
     font-size: 0.75rem;
     color: var(--muted);
@@ -93,12 +109,12 @@ const currentPath = `~/projects/${project.data.terminalFilename}`;
     white-space: nowrap;
   }
 
-  .project-cover__img-wrap {
+  .cover-img-wrap {
     position: relative;
     line-height: 0;
   }
 
-  .project-cover__img-wrap::after {
+  .cover-img-wrap::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -112,7 +128,7 @@ const currentPath = `~/projects/${project.data.terminalFilename}`;
     pointer-events: none;
   }
 
-  .project-cover img {
+  .cover-img-wrap img {
     display: block;
     width: 100%;
     height: auto;
@@ -120,12 +136,22 @@ const currentPath = `~/projects/${project.data.terminalFilename}`;
   }
 
   .project-links {
-    padding: 0.5rem 1.5rem;
+    margin-top: 1rem;
     display: flex;
     gap: 1rem;
     font-size: 0.85rem;
   }
   .project-links a {
     color: var(--primary);
+  }
+
+  @media (max-width: 640px) {
+    .page-layout {
+      flex-direction: column;
+    }
+    .cover-aside {
+      flex: none;
+      width: 100%;
+    }
   }
 </style>

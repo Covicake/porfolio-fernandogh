@@ -25,25 +25,45 @@ const currentPath = `~/experience/${entry.data.terminalFilename}`;
   backPath="/experience/"
   backLabel="experience/"
 >
-  {entry.data.coverImage && (
-    <div class="entry-cover">
-      <div class="entry-cover__chrome">
-        <span class="dot dot--red"></span>
-        <span class="dot dot--yellow"></span>
-        <span class="dot dot--green"></span>
-        <span class="entry-cover__label">{entry.data.company}</span>
-      </div>
-      <div class="entry-cover__img-wrap">
-        <img src={entry.data.coverImage} alt={`${entry.data.company} screenshot`} loading="lazy" />
-      </div>
+  <div class="page-layout">
+    {entry.data.coverImage && (
+      <aside class="cover-aside">
+        <div class="entry-cover">
+          <div class="entry-cover__chrome">
+            <span class="dot dot--red"></span>
+            <span class="dot dot--yellow"></span>
+            <span class="dot dot--green"></span>
+            <span class="cover-label">{entry.data.company}</span>
+          </div>
+          <div class="cover-img-wrap">
+            <img src={entry.data.coverImage} alt={`${entry.data.company} screenshot`} loading="lazy" />
+          </div>
+        </div>
+      </aside>
+    )}
+    <div class="page-content">
+      <Content />
     </div>
-  )}
-  <Content />
+  </div>
 </CatLayout>
 
 <style>
+  .page-layout {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .cover-aside {
+    flex: 0 0 33%;
+  }
+
+  .page-content {
+    flex: 1;
+    min-width: 0;
+  }
+
   .entry-cover {
-    margin: 0.5rem 1.5rem 1.25rem;
     border: 1px solid var(--primary-dim);
     border-radius: 6px;
     overflow: hidden;
@@ -68,18 +88,18 @@ const currentPath = `~/experience/${entry.data.terminalFilename}`;
   .dot--yellow { background: #ffbd2e; }
   .dot--green  { background: #28c840; }
 
-  .entry-cover__label {
+  .cover-label {
     margin-left: 0.5rem;
     font-size: 0.75rem;
     color: var(--muted);
   }
 
-  .entry-cover__img-wrap {
+  .cover-img-wrap {
     position: relative;
     line-height: 0;
   }
 
-  .entry-cover__img-wrap::after {
+  .cover-img-wrap::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -93,10 +113,20 @@ const currentPath = `~/experience/${entry.data.terminalFilename}`;
     pointer-events: none;
   }
 
-  .entry-cover img {
+  .cover-img-wrap img {
     display: block;
     width: 100%;
     height: auto;
     filter: saturate(0.88) contrast(1.04) brightness(0.95);
+  }
+
+  @media (max-width: 640px) {
+    .page-layout {
+      flex-direction: column;
+    }
+    .cover-aside {
+      flex: none;
+      width: 100%;
+    }
   }
 </style>
