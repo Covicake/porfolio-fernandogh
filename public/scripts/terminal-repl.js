@@ -136,14 +136,23 @@
     if (cmd === 'cat') {
       // cat bio.md → /bio/
       if (fileMap[clean]) return fileMap[clean];
-      // cat projects/my-app.mdx → /projects/my-app/
+
       const parts = clean.split('/');
       if (parts.length === 2) {
+        // cat projects/my-app.mdx → /projects/my-app/
         const dir  = parts[0];
         const file = parts[1].replace(/\.mdx?$/, '');
         return `/${dir}/${file}/`;
       }
-      // cat blog/first-post.md → /blog/first-post/
+
+      // Single filename — resolve relative to current directory
+      // e.g. inside ~/experience: cat wfr.mdx → /experience/wfr/
+      if (parts.length === 1 && currentPath !== '~') {
+        const dir  = currentPath.replace(/^~\/?/, '');
+        const file = clean.replace(/\.mdx?$/, '');
+        return `/${dir}/${file}/`;
+      }
+
       return `/${clean.replace(/\.mdx?$/, '')}/`;
     }
 
