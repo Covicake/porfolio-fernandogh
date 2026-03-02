@@ -1,0 +1,38 @@
+---
+title: "Petwatch"
+description: "Platform to help find lost pets — report a lost pet, report a found one, and generate a print-ready QR poster. Built from scratch, end to end."
+tech: ["Next.js", "NestJS", "TypeScript", "PostgreSQL", "PostGIS", "Kubernetes", "ArgoCD", "Grafana", "Cloudflare Workers"]
+status: "active"
+startDate: 2023-01-01
+featured: true
+liveUrl: "https://portal.petwatch.es"
+terminalFilename: "petwatch.mdx"
+fileSize: "3.8K"
+---
+
+## Overview
+
+Petwatch helps reunite lost pets with their owners. Users can report a lost pet or report a found animal on the street. Geospatial matching surfaces nearby reports so people can connect.
+
+The app also includes a **poster generator** — it produces a print-ready PDF optimised for visibility on the street, with a QR code that links directly to the pet's report.
+
+Built entirely from scratch: product, frontend, backend, and infrastructure.
+
+## Frontend
+
+- **Next.js** deployed on **Cloudflare Workers** for edge performance
+- Full TypeScript throughout
+
+## Backend
+
+- **NestJS** REST API with **TypeScript**
+- **PostgreSQL** with **PostGIS** for geospatial queries (nearby reports, radius search)
+- PDF generation for the poster feature with embedded QR codes
+- Clean architecture, domain-driven design
+
+## Infrastructure
+
+- Self-hosted **Kubernetes** cluster on a VPS
+- **ArgoCD** for GitOps-based CI/CD — git push to deploy
+- **Grafana** stack for observability: metrics, logs, dashboards
+- **Cloudflare** for DNS, edge caching and Workers deployment

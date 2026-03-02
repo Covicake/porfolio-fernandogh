@@ -25,5 +25,33 @@ const entries: LsEntryData[] = experience.map(e => ({
   description="Work history and professional experience"
   currentPath={currentPath}
 >
+  <div class="section-overview">
+    <p>
+      <span class="overview-label">8+ years</span> of professional experience building backend-heavy systems in enterprise environments.
+      Tech Lead at <span class="overview-highlight">Docline</span> and <span class="overview-highlight">Acciona</span>,
+      Software Architect at <span class="overview-highlight">Natures Menu</span>.
+      Specialised in Java, Node.js, clean architecture and distributed systems.
+    </p>
+  </div>
   <LsOutput entries={entries} path={currentPath} />
 </TerminalLayout>
+
+<style>
+  .section-overview {
+    padding: 0.75rem 1.5rem 0.25rem;
+    border-left: 2px solid var(--primary-dim);
+    margin: 0 1.5rem 0.5rem;
+    color: var(--muted-light);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .overview-label {
+    color: var(--amber);
+    font-weight: 700;
+  }
+
+  .overview-highlight {
+    color: var(--white);
+  }
+</style>

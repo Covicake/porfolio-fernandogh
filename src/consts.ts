@@ -4,6 +4,6 @@
 export const SITE_TITLE = "fer@portfolio";
 export const SITE_DESCRIPTION = "CLI terminal portfolio — Fernando's dev portfolio";
 
-export const OWNER_NAME = "Fernando";
+export const OWNER_NAME = "Fernando García Hernández";
 export const OWNER_HOST = "portfolio";
 export const OWNER_USER = "fer";

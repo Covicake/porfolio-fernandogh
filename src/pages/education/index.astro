@@ -25,5 +25,27 @@ const entries: LsEntryData[] = education.map(e => ({
   description="Degrees and courses"
   currentPath={currentPath}
 >
+  <div class="section-overview">
+    <p>
+      Formal training in <span class="overview-highlight">mobile</span> and
+      <span class="overview-highlight">web application development</span>,
+      complemented by 8+ years of hands-on experience in production systems.
+    </p>
+  </div>
   <LsOutput entries={entries} path={currentPath} />
 </TerminalLayout>
+
+<style>
+  .section-overview {
+    padding: 0.75rem 1.5rem 0.25rem;
+    border-left: 2px solid var(--primary-dim);
+    margin: 0 1.5rem 0.5rem;
+    color: var(--muted-light);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .overview-highlight {
+    color: var(--white);
+  }
+</style>

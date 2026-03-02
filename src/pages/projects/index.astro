@@ -25,5 +25,27 @@ const entries: LsEntryData[] = projects.map(p => ({
   description="Side projects and open source work"
   currentPath={currentPath}
 >
+  <div class="section-overview">
+    <p>
+      Personal projects built outside of work — things I wanted to exist and decided to build myself.
+      From a <span class="overview-highlight">lost pets platform</span> with geospatial search and PDF poster generation
+      to this <span class="overview-highlight">terminal portfolio</span> with a full REPL engine.
+    </p>
+  </div>
   <LsOutput entries={entries} path={currentPath} />
 </TerminalLayout>
+
+<style>
+  .section-overview {
+    padding: 0.75rem 1.5rem 0.25rem;
+    border-left: 2px solid var(--primary-dim);
+    margin: 0 1.5rem 0.5rem;
+    color: var(--muted-light);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .overview-highlight {
+    color: var(--white);
+  }
+</style>
