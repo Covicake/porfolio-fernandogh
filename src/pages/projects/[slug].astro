@@ -25,6 +25,21 @@ const currentPath = `~/projects/${project.data.terminalFilename}`;
   backPath="/projects/"
   backLabel="projects/"
 >
+  {project.data.coverImage && (
+    <div class="project-cover">
+      <div class="project-cover__chrome">
+        <span class="dot dot--red"></span>
+        <span class="dot dot--yellow"></span>
+        <span class="dot dot--green"></span>
+        {project.data.liveUrl && (
+          <span class="project-cover__url">{project.data.liveUrl.replace(/^https?:\/\//, '')}</span>
+        )}
+      </div>
+      <div class="project-cover__img-wrap">
+        <img src={project.data.coverImage} alt={`${project.data.title} screenshot`} loading="lazy" />
+      </div>
+    </div>
+  )}
   <Content />
   {(project.data.repoUrl || project.data.liveUrl) && (
     <div class="project-links">
@@ -43,6 +58,67 @@ const currentPath = `~/projects/${project.data.terminalFilename}`;
 </CatLayout>
 
 <style>
+  .project-cover {
+    margin: 0.5rem 1.5rem 1.25rem;
+    border: 1px solid var(--primary-dim);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .project-cover__chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.75rem;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--primary-dim);
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot--red    { background: #ff5f57; }
+  .dot--yellow { background: #ffbd2e; }
+  .dot--green  { background: #28c840; }
+
+  .project-cover__url {
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .project-cover__img-wrap {
+    position: relative;
+    line-height: 0;
+  }
+
+  .project-cover__img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.04) 2px,
+      rgba(0, 0, 0, 0.04) 4px
+    );
+    pointer-events: none;
+  }
+
+  .project-cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: saturate(0.88) contrast(1.04) brightness(0.95);
+  }
+
   .project-links {
     padding: 0.5rem 1.5rem;
     display: flex;

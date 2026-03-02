@@ -23,6 +23,7 @@ const projects = defineCollection({
     status: z.enum(["active", "archived", "wip"]),
     repoUrl: z.string().url().optional(),
     liveUrl: z.string().url().optional(),
+    coverImage: z.string().optional(),
     startDate: z.coerce.date(),
     endDate: z.coerce.date().optional(),
     featured: z.boolean().default(false),
