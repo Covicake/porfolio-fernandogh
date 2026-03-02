@@ -363,8 +363,11 @@
       dirKey = '/' + partialArg.slice(0, slashIdx + 1);
       prefix = partialArg.slice(slashIdx + 1);
     } else {
-      // Root-level file/dir based on current context
-      const candidates = fsMap['/'] || [];
+      // No slash — search current directory, fall back to root
+      const curDir = currentPath === '~'
+        ? '/'
+        : '/' + currentPath.replace(/^~\/?/, '') + '/';
+      const candidates = fsMap[curDir] || fsMap['/'] || [];
       const matches = candidates.filter(c => c.startsWith(partialArg));
       if (matches.length === 1) {
         inputEl.value = `${cmdPart} ${matches[0]}`;
