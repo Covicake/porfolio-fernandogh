@@ -157,7 +157,13 @@
     }
 
     if (cmd === 'ls' || cmd === 'cd') {
-      if (!clean || clean === '~') return '/';
+      if (!clean || clean === '~') {
+        // `ls` with no arg → stay in current dir; `cd` with no arg → home
+        if (cmd === 'ls' && currentPath !== '~') {
+          return '/' + currentPath.replace(/^~\/?/, '') + '/';
+        }
+        return '/';
+      }
       if (clean === '..') return resolveParent();
 
       // Relative dir: projects → /projects/
