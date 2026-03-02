@@ -44,6 +44,7 @@ const experience = defineCollection({
     tech: z.array(z.string()).default([]),
     terminalFilename: z.string(),
     fileSize: z.string().optional(),
+    coverImage: z.string().optional(),
   }),
 });
 

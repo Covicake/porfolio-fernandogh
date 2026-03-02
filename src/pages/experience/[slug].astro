@@ -25,5 +25,78 @@ const currentPath = `~/experience/${entry.data.terminalFilename}`;
   backPath="/experience/"
   backLabel="experience/"
 >
+  {entry.data.coverImage && (
+    <div class="entry-cover">
+      <div class="entry-cover__chrome">
+        <span class="dot dot--red"></span>
+        <span class="dot dot--yellow"></span>
+        <span class="dot dot--green"></span>
+        <span class="entry-cover__label">{entry.data.company}</span>
+      </div>
+      <div class="entry-cover__img-wrap">
+        <img src={entry.data.coverImage} alt={`${entry.data.company} screenshot`} loading="lazy" />
+      </div>
+    </div>
+  )}
   <Content />
 </CatLayout>
+
+<style>
+  .entry-cover {
+    margin: 0.5rem 1.5rem 1.25rem;
+    border: 1px solid var(--primary-dim);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .entry-cover__chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.75rem;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--primary-dim);
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot--red    { background: #ff5f57; }
+  .dot--yellow { background: #ffbd2e; }
+  .dot--green  { background: #28c840; }
+
+  .entry-cover__label {
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .entry-cover__img-wrap {
+    position: relative;
+    line-height: 0;
+  }
+
+  .entry-cover__img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.04) 2px,
+      rgba(0, 0, 0, 0.04) 4px
+    );
+    pointer-events: none;
+  }
+
+  .entry-cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: saturate(0.88) contrast(1.04) brightness(0.95);
+  }
+</style>
