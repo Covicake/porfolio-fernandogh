@@ -225,7 +225,13 @@
 
   // ── Scroll to bottom ─────────────────────────────────────────
   function scrollToBottom() {
-    inputEl.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    // Double rAF: first frame lets the browser process DOM changes,
+    // second fires after layout so the scroll target is fully measured.
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() =>
+        inputEl.scrollIntoView({ behavior: 'smooth', block: 'end' })
+      )
+    );
   }
 
   // ── Inline output (no navigation) ────────────────────────────
